@@ -1,0 +1,2904 @@
+* {
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+}
+
+:root {
+  --x: 2;
+  --y: 2;
+  --hp: 5;
+  --atk: 0;
+  counter-increment: hp var(--hp);
+}
+
+body {
+  background: #25131a;
+  font-family: 'Press Start 2P';
+  counter-increment: atk var(--atk);
+}
+
+input {
+  display: none;
+}
+
+.map {
+  width: 840px;
+  height: 840px;
+  margin: 0 auto;
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: 0px 0px;
+  display: -ms-grid;
+  display: grid;
+  -ms-grid-columns: (1fr)[7];
+      grid-template-columns: repeat(7, 1fr);
+}
+
+.map > label {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+  color: #fff;
+}
+
+.player {
+  width: 120px;
+  height: 240px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  color: #fff;
+  pointer-events: none;
+  left: calc(120px * var(--x) - 120px);
+  top: calc(120px * var(--y) - 120px - 120px);
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -480px -840px;
+  -webkit-animation: player_animation 0.5s steps(4, end) infinite;
+          animation: player_animation 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes player_animation {
+  0% {
+    background-size: auto;
+    background-position: -480px -840px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -960px -840px;
+  }
+}
+
+@keyframes player_animation {
+  0% {
+    background-size: auto;
+    background-position: -480px -840px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -960px -840px;
+  }
+}
+
+.player:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: counter(hp);
+  height: 50%;
+  -webkit-transform: none;
+          transform: none;
+}
+
+@-webkit-keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.player:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: counter(atk);
+  height: 50%;
+  -webkit-transform: none;
+          transform: none;
+}
+
+@-webkit-keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.wall {
+  pointer-events: none !important;
+}
+
+.monster1:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: attr(hp);
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.monster1:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: attr(atk);
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.monster1 span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: 0px -1080px;
+  -webkit-animation: monster1 0.5s steps(4, end) infinite;
+          animation: monster1 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes monster1 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1080px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1080px;
+  }
+}
+
+@keyframes monster1 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1080px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1080px;
+  }
+}
+
+.monster2:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: attr(hp);
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.monster2:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: attr(atk);
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.monster2 span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: 0px -1200px;
+  -webkit-animation: monster2 0.5s steps(4, end) infinite;
+          animation: monster2 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes monster2 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1200px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1200px;
+  }
+}
+
+@keyframes monster2 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1200px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1200px;
+  }
+}
+
+.monster3:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: attr(hp);
+  -webkit-transform: none;
+          transform: none;
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.monster3:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: attr(atk);
+  -webkit-transform: none;
+          transform: none;
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.monster3 span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -480px -1080px;
+  -webkit-animation: monster3 0.5s steps(1, end) infinite;
+          animation: monster3 0.5s steps(1, end) infinite;
+}
+
+@-webkit-keyframes monster3 {
+  0% {
+    background-size: auto;
+    background-position: -480px -1080px;
+  }
+  50% {
+    background-size: auto;
+    background-position: -720px -1080px;
+  }
+  75% {
+    background-size: auto;
+    background-position: -960px -1080px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1200px -1080px;
+  }
+}
+
+@keyframes monster3 {
+  0% {
+    background-size: auto;
+    background-position: -480px -1080px;
+  }
+  50% {
+    background-size: auto;
+    background-position: -720px -1080px;
+  }
+  75% {
+    background-size: auto;
+    background-position: -960px -1080px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1200px -1080px;
+  }
+}
+
+.monster4:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: attr(hp);
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.monster4:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: attr(atk);
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.monster4 span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: 0px -1320px;
+  -webkit-animation: monster4 0.5s steps(4, end) infinite;
+          animation: monster4 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes monster4 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1320px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1320px;
+  }
+}
+
+@keyframes monster4 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1320px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1320px;
+  }
+}
+
+.monster5:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: attr(hp);
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.monster5:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: attr(atk);
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.monster5 span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 200%;
+  pointer-events: none;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: 0px -1440px;
+  -webkit-animation: monster5 0.5s steps(4, end) infinite;
+          animation: monster5 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes monster5 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1440px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1440px;
+  }
+}
+
+@keyframes monster5 {
+  0% {
+    background-size: auto;
+    background-position: 0px -1440px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -480px -1440px;
+  }
+}
+
+.monster6:before {
+  content: '';
+  width: 100%;
+  height: 100%;
+  left: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, -30%);
+          transform: translate(30%, -30%);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px 0px;
+  -webkit-animation: ui_heart 1s steps(4, end) infinite;
+          animation: ui_heart 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  padding: 0;
+  content: attr(hp);
+  -webkit-transform: none;
+          transform: none;
+}
+
+@keyframes ui_heart {
+  0% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px 0px;
+  }
+}
+
+.monster6:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+      -ms-flex-align: end;
+          align-items: flex-end;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transform: translate(30%, 0);
+          transform: translate(30%, 0);
+  -webkit-backface-visibility: hidden;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -480px;
+  -webkit-animation: ui_sword 1s steps(4, end) infinite;
+          animation: ui_sword 1s steps(4, end) infinite;
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+  line-height: 1.5;
+  padding: 0;
+  content: attr(atk);
+  -webkit-transform: none;
+          transform: none;
+}
+
+@keyframes ui_sword {
+  0% {
+    background-size: auto;
+    background-position: -1320px -480px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -480px;
+  }
+}
+
+.monster6 span {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 200%;
+  height: 200%;
+  pointer-events: none;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -480px -1440px;
+  -webkit-animation: monster6 0.5s steps(1, end) infinite;
+          animation: monster6 0.5s steps(1, end) infinite;
+}
+
+@-webkit-keyframes monster6 {
+  0% {
+    background-size: auto;
+    background-position: -480px -1440px;
+  }
+  50% {
+    background-size: auto;
+    background-position: -720px -1440px;
+  }
+  75% {
+    background-size: auto;
+    background-position: -960px -1440px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1200px -1440px;
+  }
+}
+
+@keyframes monster6 {
+  0% {
+    background-size: auto;
+    background-position: -480px -1440px;
+  }
+  50% {
+    background-size: auto;
+    background-position: -720px -1440px;
+  }
+  75% {
+    background-size: auto;
+    background-position: -960px -1440px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1200px -1440px;
+  }
+}
+
+.potion {
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -840px 0px;
+  -webkit-animation: potion 0.5s steps(4, end) infinite;
+          animation: potion 0.5s steps(4, end) infinite;
+}
+
+.potion:before {
+  content: "+" attr(hp);
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+}
+
+@-webkit-keyframes potion {
+  0% {
+    background-size: auto;
+    background-position: -840px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+}
+
+@keyframes potion {
+  0% {
+    background-size: auto;
+    background-position: -840px 0px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px 0px;
+  }
+}
+
+.potion-lg {
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -840px -120px;
+  -webkit-animation: potion_lg 0.5s steps(4, end) infinite;
+          animation: potion_lg 0.5s steps(4, end) infinite;
+}
+
+.potion-lg:before {
+  content: "+" attr(hp);
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+}
+
+@-webkit-keyframes potion_lg {
+  0% {
+    background-size: auto;
+    background-position: -840px -120px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -120px;
+  }
+}
+
+@keyframes potion_lg {
+  0% {
+    background-size: auto;
+    background-position: -840px -120px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -120px;
+  }
+}
+
+.sword {
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -840px -240px;
+  -webkit-animation: sword 0.5s steps(4, end) infinite;
+          animation: sword 0.5s steps(4, end) infinite;
+}
+
+.sword:after {
+  content: "+" attr(atk);
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+}
+
+@-webkit-keyframes sword {
+  0% {
+    background-size: auto;
+    background-position: -840px -240px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -240px;
+  }
+}
+
+@keyframes sword {
+  0% {
+    background-size: auto;
+    background-position: -840px -240px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -240px;
+  }
+}
+
+.sword-lg {
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -840px -360px;
+  -webkit-animation: sword_lg 0.5s steps(4, end) infinite;
+          animation: sword_lg 0.5s steps(4, end) infinite;
+}
+
+.sword-lg:after {
+  content: "+" attr(atk);
+  z-index: 1;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  padding: 0.75rem;
+  font-size: 1.5rem;
+  text-shadow: 3px 3px 0 #000, -3px -3px 0 #000,  3px -3px 0 #000,  -3px 3px 0 #000,  3px 0 0 #000, 0 3px 0 #000,  -3px 0px 0 #000,  0px -3px 0 #000;
+}
+
+@-webkit-keyframes sword_lg {
+  0% {
+    background-size: auto;
+    background-position: -840px -360px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -360px;
+  }
+}
+
+@keyframes sword_lg {
+  0% {
+    background-size: auto;
+    background-position: -840px -360px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -360px;
+  }
+}
+
+.torch {
+  position: relative;
+  pointer-events: none !important;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -840px -600px;
+  -webkit-animation: torch 0.5s steps(4, end) infinite;
+          animation: torch 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes torch {
+  0% {
+    background-size: auto;
+    background-position: -840px -600px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -600px;
+  }
+}
+
+@keyframes torch {
+  0% {
+    background-size: auto;
+    background-position: -840px -600px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -600px;
+  }
+}
+
+.key {
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -1320px -600px;
+  -webkit-animation: key 0.5s steps(4, end) infinite;
+          animation: key 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes key {
+  0% {
+    background-size: auto;
+    background-position: -1320px -600px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -600px;
+  }
+}
+
+@keyframes key {
+  0% {
+    background-size: auto;
+    background-position: -1320px -600px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1800px -600px;
+  }
+}
+
+.chest {
+  position: relative;
+  background: url(../img/sprite.png) no-repeat;
+  background-size: auto;
+  background-position: -840px -720px;
+  -webkit-animation: chest 0.5s steps(4, end) infinite;
+          animation: chest 0.5s steps(4, end) infinite;
+}
+
+@-webkit-keyframes chest {
+  0% {
+    background-size: auto;
+    background-position: -840px -720px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -720px;
+  }
+}
+
+@keyframes chest {
+  0% {
+    background-size: auto;
+    background-position: -840px -720px;
+  }
+  100% {
+    background-size: auto;
+    background-position: -1320px -720px;
+  }
+}
+
+#x1y1:checked ~ .map {
+  --x: 1;
+  --y: 1;
+}
+
+#x1y1:checked ~ .map label[for*='x1y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y1:checked ~ .map label[for*='x2y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y1:checked ~ .map label[for*='x1y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y1:checked ~ .map label[for*='x0y0'],
+#x1y1:checked ~ .map label[for*='x2y0'],
+#x1y1:checked ~ .map label[for*='x2y2'],
+#x1y1:checked ~ .map label[for*='x0y2'],
+#x1y1:checked ~ .map label[for*='x0y1'] {
+  pointer-events: none;
+}
+
+#x1y1:checked #x2y1:checked ~ .map label[for*='x3y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y2:checked ~ .map {
+  --x: 1;
+  --y: 2;
+}
+
+#x1y2:checked ~ .map label[for*='x1y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y2:checked ~ .map label[for*='x2y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y2:checked ~ .map label[for*='x1y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y2:checked ~ .map label[for*='x0y1'],
+#x1y2:checked ~ .map label[for*='x2y1'],
+#x1y2:checked ~ .map label[for*='x2y3'],
+#x1y2:checked ~ .map label[for*='x0y3'],
+#x1y2:checked ~ .map label[for*='x0y2'] {
+  pointer-events: none;
+}
+
+#x1y2:checked #x2y2:checked ~ .map label[for*='x3y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y3:checked ~ .map {
+  --x: 1;
+  --y: 3;
+}
+
+#x1y3:checked ~ .map label[for*='x1y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y3:checked ~ .map label[for*='x2y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y3:checked ~ .map label[for*='x1y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y3:checked ~ .map label[for*='x0y2'],
+#x1y3:checked ~ .map label[for*='x2y2'],
+#x1y3:checked ~ .map label[for*='x2y4'],
+#x1y3:checked ~ .map label[for*='x0y4'],
+#x1y3:checked ~ .map label[for*='x0y3'] {
+  pointer-events: none;
+}
+
+#x1y3:checked #x2y3:checked ~ .map label[for*='x3y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y4:checked ~ .map {
+  --x: 1;
+  --y: 4;
+}
+
+#x1y4:checked ~ .map label[for*='x1y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y4:checked ~ .map label[for*='x2y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y4:checked ~ .map label[for*='x1y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y4:checked ~ .map label[for*='x0y3'],
+#x1y4:checked ~ .map label[for*='x2y3'],
+#x1y4:checked ~ .map label[for*='x2y5'],
+#x1y4:checked ~ .map label[for*='x0y5'],
+#x1y4:checked ~ .map label[for*='x0y4'] {
+  pointer-events: none;
+}
+
+#x1y4:checked #x2y4:checked ~ .map label[for*='x3y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y5:checked ~ .map {
+  --x: 1;
+  --y: 5;
+}
+
+#x1y5:checked ~ .map label[for*='x1y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y5:checked ~ .map label[for*='x2y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y5:checked ~ .map label[for*='x1y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y5:checked ~ .map label[for*='x0y4'],
+#x1y5:checked ~ .map label[for*='x2y4'],
+#x1y5:checked ~ .map label[for*='x2y6'],
+#x1y5:checked ~ .map label[for*='x0y6'],
+#x1y5:checked ~ .map label[for*='x0y5'] {
+  pointer-events: none;
+}
+
+#x1y5:checked #x2y5:checked ~ .map label[for*='x3y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y6:checked ~ .map {
+  --x: 1;
+  --y: 6;
+}
+
+#x1y6:checked ~ .map label[for*='x1y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y6:checked ~ .map label[for*='x2y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y6:checked ~ .map label[for*='x1y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y6:checked ~ .map label[for*='x0y5'],
+#x1y6:checked ~ .map label[for*='x2y5'],
+#x1y6:checked ~ .map label[for*='x2y7'],
+#x1y6:checked ~ .map label[for*='x0y7'],
+#x1y6:checked ~ .map label[for*='x0y6'] {
+  pointer-events: none;
+}
+
+#x1y6:checked #x2y6:checked ~ .map label[for*='x3y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y7:checked ~ .map {
+  --x: 1;
+  --y: 7;
+}
+
+#x1y7:checked ~ .map label[for*='x1y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y7:checked ~ .map label[for*='x2y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x1y7:checked ~ .map label[for*='x1y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x1y7:checked ~ .map label[for*='x0y6'],
+#x1y7:checked ~ .map label[for*='x2y6'],
+#x1y7:checked ~ .map label[for*='x2y8'],
+#x1y7:checked ~ .map label[for*='x0y8'],
+#x1y7:checked ~ .map label[for*='x0y7'] {
+  pointer-events: none;
+}
+
+#x1y7:checked #x2y7:checked ~ .map label[for*='x3y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y1:checked ~ .map {
+  --x: 2;
+  --y: 1;
+}
+
+#x2y1:checked ~ .map label[for*='x2y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y1:checked ~ .map label[for*='x3y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y1:checked ~ .map label[for*='x2y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y1:checked ~ .map label[for*='x1y0'],
+#x2y1:checked ~ .map label[for*='x3y0'],
+#x2y1:checked ~ .map label[for*='x3y2'],
+#x2y1:checked ~ .map label[for*='x1y2'],
+#x2y1:checked ~ .map label[for*='x1y1'] {
+  pointer-events: none;
+}
+
+#x2y1:checked #x3y1:checked ~ .map label[for*='x4y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y2:checked ~ .map {
+  --x: 2;
+  --y: 2;
+}
+
+#x2y2:checked ~ .map label[for*='x2y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y2:checked ~ .map label[for*='x3y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y2:checked ~ .map label[for*='x2y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y2:checked ~ .map label[for*='x1y1'],
+#x2y2:checked ~ .map label[for*='x3y1'],
+#x2y2:checked ~ .map label[for*='x3y3'],
+#x2y2:checked ~ .map label[for*='x1y3'],
+#x2y2:checked ~ .map label[for*='x1y2'] {
+  pointer-events: none;
+}
+
+#x2y2:checked #x3y2:checked ~ .map label[for*='x4y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y3:checked ~ .map {
+  --x: 2;
+  --y: 3;
+}
+
+#x2y3:checked ~ .map label[for*='x2y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y3:checked ~ .map label[for*='x3y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y3:checked ~ .map label[for*='x2y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y3:checked ~ .map label[for*='x1y2'],
+#x2y3:checked ~ .map label[for*='x3y2'],
+#x2y3:checked ~ .map label[for*='x3y4'],
+#x2y3:checked ~ .map label[for*='x1y4'],
+#x2y3:checked ~ .map label[for*='x1y3'] {
+  pointer-events: none;
+}
+
+#x2y3:checked #x3y3:checked ~ .map label[for*='x4y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y4:checked ~ .map {
+  --x: 2;
+  --y: 4;
+}
+
+#x2y4:checked ~ .map label[for*='x2y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y4:checked ~ .map label[for*='x3y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y4:checked ~ .map label[for*='x2y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y4:checked ~ .map label[for*='x1y3'],
+#x2y4:checked ~ .map label[for*='x3y3'],
+#x2y4:checked ~ .map label[for*='x3y5'],
+#x2y4:checked ~ .map label[for*='x1y5'],
+#x2y4:checked ~ .map label[for*='x1y4'] {
+  pointer-events: none;
+}
+
+#x2y4:checked #x3y4:checked ~ .map label[for*='x4y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y5:checked ~ .map {
+  --x: 2;
+  --y: 5;
+}
+
+#x2y5:checked ~ .map label[for*='x2y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y5:checked ~ .map label[for*='x3y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y5:checked ~ .map label[for*='x2y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y5:checked ~ .map label[for*='x1y4'],
+#x2y5:checked ~ .map label[for*='x3y4'],
+#x2y5:checked ~ .map label[for*='x3y6'],
+#x2y5:checked ~ .map label[for*='x1y6'],
+#x2y5:checked ~ .map label[for*='x1y5'] {
+  pointer-events: none;
+}
+
+#x2y5:checked #x3y5:checked ~ .map label[for*='x4y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y6:checked ~ .map {
+  --x: 2;
+  --y: 6;
+}
+
+#x2y6:checked ~ .map label[for*='x2y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y6:checked ~ .map label[for*='x3y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y6:checked ~ .map label[for*='x2y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y6:checked ~ .map label[for*='x1y5'],
+#x2y6:checked ~ .map label[for*='x3y5'],
+#x2y6:checked ~ .map label[for*='x3y7'],
+#x2y6:checked ~ .map label[for*='x1y7'],
+#x2y6:checked ~ .map label[for*='x1y6'] {
+  pointer-events: none;
+}
+
+#x2y6:checked #x3y6:checked ~ .map label[for*='x4y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y7:checked ~ .map {
+  --x: 2;
+  --y: 7;
+}
+
+#x2y7:checked ~ .map label[for*='x2y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y7:checked ~ .map label[for*='x3y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x2y7:checked ~ .map label[for*='x2y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x2y7:checked ~ .map label[for*='x1y6'],
+#x2y7:checked ~ .map label[for*='x3y6'],
+#x2y7:checked ~ .map label[for*='x3y8'],
+#x2y7:checked ~ .map label[for*='x1y8'],
+#x2y7:checked ~ .map label[for*='x1y7'] {
+  pointer-events: none;
+}
+
+#x2y7:checked #x3y7:checked ~ .map label[for*='x4y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y1:checked ~ .map {
+  --x: 3;
+  --y: 1;
+}
+
+#x3y1:checked ~ .map label[for*='x3y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y1:checked ~ .map label[for*='x4y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y1:checked ~ .map label[for*='x3y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y1:checked ~ .map label[for*='x2y0'],
+#x3y1:checked ~ .map label[for*='x4y0'],
+#x3y1:checked ~ .map label[for*='x4y2'],
+#x3y1:checked ~ .map label[for*='x2y2'],
+#x3y1:checked ~ .map label[for*='x2y1'] {
+  pointer-events: none;
+}
+
+#x3y1:checked #x4y1:checked ~ .map label[for*='x5y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y2:checked ~ .map {
+  --x: 3;
+  --y: 2;
+}
+
+#x3y2:checked ~ .map label[for*='x3y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y2:checked ~ .map label[for*='x4y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y2:checked ~ .map label[for*='x3y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y2:checked ~ .map label[for*='x2y1'],
+#x3y2:checked ~ .map label[for*='x4y1'],
+#x3y2:checked ~ .map label[for*='x4y3'],
+#x3y2:checked ~ .map label[for*='x2y3'],
+#x3y2:checked ~ .map label[for*='x2y2'] {
+  pointer-events: none;
+}
+
+#x3y2:checked #x4y2:checked ~ .map label[for*='x5y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y3:checked ~ .map {
+  --x: 3;
+  --y: 3;
+}
+
+#x3y3:checked ~ .map label[for*='x3y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y3:checked ~ .map label[for*='x4y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y3:checked ~ .map label[for*='x3y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y3:checked ~ .map label[for*='x2y2'],
+#x3y3:checked ~ .map label[for*='x4y2'],
+#x3y3:checked ~ .map label[for*='x4y4'],
+#x3y3:checked ~ .map label[for*='x2y4'],
+#x3y3:checked ~ .map label[for*='x2y3'] {
+  pointer-events: none;
+}
+
+#x3y3:checked #x4y3:checked ~ .map label[for*='x5y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y4:checked ~ .map {
+  --x: 3;
+  --y: 4;
+}
+
+#x3y4:checked ~ .map label[for*='x3y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y4:checked ~ .map label[for*='x4y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y4:checked ~ .map label[for*='x3y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y4:checked ~ .map label[for*='x2y3'],
+#x3y4:checked ~ .map label[for*='x4y3'],
+#x3y4:checked ~ .map label[for*='x4y5'],
+#x3y4:checked ~ .map label[for*='x2y5'],
+#x3y4:checked ~ .map label[for*='x2y4'] {
+  pointer-events: none;
+}
+
+#x3y4:checked #x4y4:checked ~ .map label[for*='x5y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y5:checked ~ .map {
+  --x: 3;
+  --y: 5;
+}
+
+#x3y5:checked ~ .map label[for*='x3y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y5:checked ~ .map label[for*='x4y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y5:checked ~ .map label[for*='x3y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y5:checked ~ .map label[for*='x2y4'],
+#x3y5:checked ~ .map label[for*='x4y4'],
+#x3y5:checked ~ .map label[for*='x4y6'],
+#x3y5:checked ~ .map label[for*='x2y6'],
+#x3y5:checked ~ .map label[for*='x2y5'] {
+  pointer-events: none;
+}
+
+#x3y5:checked #x4y5:checked ~ .map label[for*='x5y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y6:checked ~ .map {
+  --x: 3;
+  --y: 6;
+}
+
+#x3y6:checked ~ .map label[for*='x3y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y6:checked ~ .map label[for*='x4y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y6:checked ~ .map label[for*='x3y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y6:checked ~ .map label[for*='x2y5'],
+#x3y6:checked ~ .map label[for*='x4y5'],
+#x3y6:checked ~ .map label[for*='x4y7'],
+#x3y6:checked ~ .map label[for*='x2y7'],
+#x3y6:checked ~ .map label[for*='x2y6'] {
+  pointer-events: none;
+}
+
+#x3y6:checked #x4y6:checked ~ .map label[for*='x5y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y7:checked ~ .map {
+  --x: 3;
+  --y: 7;
+}
+
+#x3y7:checked ~ .map label[for*='x3y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y7:checked ~ .map label[for*='x4y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x3y7:checked ~ .map label[for*='x3y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x3y7:checked ~ .map label[for*='x2y6'],
+#x3y7:checked ~ .map label[for*='x4y6'],
+#x3y7:checked ~ .map label[for*='x4y8'],
+#x3y7:checked ~ .map label[for*='x2y8'],
+#x3y7:checked ~ .map label[for*='x2y7'] {
+  pointer-events: none;
+}
+
+#x3y7:checked #x4y7:checked ~ .map label[for*='x5y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y1:checked ~ .map {
+  --x: 4;
+  --y: 1;
+}
+
+#x4y1:checked ~ .map label[for*='x4y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y1:checked ~ .map label[for*='x5y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y1:checked ~ .map label[for*='x4y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y1:checked ~ .map label[for*='x3y0'],
+#x4y1:checked ~ .map label[for*='x5y0'],
+#x4y1:checked ~ .map label[for*='x5y2'],
+#x4y1:checked ~ .map label[for*='x3y2'],
+#x4y1:checked ~ .map label[for*='x3y1'] {
+  pointer-events: none;
+}
+
+#x4y1:checked #x5y1:checked ~ .map label[for*='x6y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y2:checked ~ .map {
+  --x: 4;
+  --y: 2;
+}
+
+#x4y2:checked ~ .map label[for*='x4y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y2:checked ~ .map label[for*='x5y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y2:checked ~ .map label[for*='x4y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y2:checked ~ .map label[for*='x3y1'],
+#x4y2:checked ~ .map label[for*='x5y1'],
+#x4y2:checked ~ .map label[for*='x5y3'],
+#x4y2:checked ~ .map label[for*='x3y3'],
+#x4y2:checked ~ .map label[for*='x3y2'] {
+  pointer-events: none;
+}
+
+#x4y2:checked #x5y2:checked ~ .map label[for*='x6y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y3:checked ~ .map {
+  --x: 4;
+  --y: 3;
+}
+
+#x4y3:checked ~ .map label[for*='x4y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y3:checked ~ .map label[for*='x5y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y3:checked ~ .map label[for*='x4y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y3:checked ~ .map label[for*='x3y2'],
+#x4y3:checked ~ .map label[for*='x5y2'],
+#x4y3:checked ~ .map label[for*='x5y4'],
+#x4y3:checked ~ .map label[for*='x3y4'],
+#x4y3:checked ~ .map label[for*='x3y3'] {
+  pointer-events: none;
+}
+
+#x4y3:checked #x5y3:checked ~ .map label[for*='x6y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y4:checked ~ .map {
+  --x: 4;
+  --y: 4;
+}
+
+#x4y4:checked ~ .map label[for*='x4y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y4:checked ~ .map label[for*='x5y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y4:checked ~ .map label[for*='x4y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y4:checked ~ .map label[for*='x3y3'],
+#x4y4:checked ~ .map label[for*='x5y3'],
+#x4y4:checked ~ .map label[for*='x5y5'],
+#x4y4:checked ~ .map label[for*='x3y5'],
+#x4y4:checked ~ .map label[for*='x3y4'] {
+  pointer-events: none;
+}
+
+#x4y4:checked #x5y4:checked ~ .map label[for*='x6y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y5:checked ~ .map {
+  --x: 4;
+  --y: 5;
+}
+
+#x4y5:checked ~ .map label[for*='x4y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y5:checked ~ .map label[for*='x5y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y5:checked ~ .map label[for*='x4y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y5:checked ~ .map label[for*='x3y4'],
+#x4y5:checked ~ .map label[for*='x5y4'],
+#x4y5:checked ~ .map label[for*='x5y6'],
+#x4y5:checked ~ .map label[for*='x3y6'],
+#x4y5:checked ~ .map label[for*='x3y5'] {
+  pointer-events: none;
+}
+
+#x4y5:checked #x5y5:checked ~ .map label[for*='x6y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y6:checked ~ .map {
+  --x: 4;
+  --y: 6;
+}
+
+#x4y6:checked ~ .map label[for*='x4y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y6:checked ~ .map label[for*='x5y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y6:checked ~ .map label[for*='x4y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y6:checked ~ .map label[for*='x3y5'],
+#x4y6:checked ~ .map label[for*='x5y5'],
+#x4y6:checked ~ .map label[for*='x5y7'],
+#x4y6:checked ~ .map label[for*='x3y7'],
+#x4y6:checked ~ .map label[for*='x3y6'] {
+  pointer-events: none;
+}
+
+#x4y6:checked #x5y6:checked ~ .map label[for*='x6y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y7:checked ~ .map {
+  --x: 4;
+  --y: 7;
+}
+
+#x4y7:checked ~ .map label[for*='x4y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y7:checked ~ .map label[for*='x5y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x4y7:checked ~ .map label[for*='x4y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x4y7:checked ~ .map label[for*='x3y6'],
+#x4y7:checked ~ .map label[for*='x5y6'],
+#x4y7:checked ~ .map label[for*='x5y8'],
+#x4y7:checked ~ .map label[for*='x3y8'],
+#x4y7:checked ~ .map label[for*='x3y7'] {
+  pointer-events: none;
+}
+
+#x4y7:checked #x5y7:checked ~ .map label[for*='x6y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y1:checked ~ .map {
+  --x: 5;
+  --y: 1;
+}
+
+#x5y1:checked ~ .map label[for*='x5y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y1:checked ~ .map label[for*='x6y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y1:checked ~ .map label[for*='x5y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y1:checked ~ .map label[for*='x4y0'],
+#x5y1:checked ~ .map label[for*='x6y0'],
+#x5y1:checked ~ .map label[for*='x6y2'],
+#x5y1:checked ~ .map label[for*='x4y2'],
+#x5y1:checked ~ .map label[for*='x4y1'] {
+  pointer-events: none;
+}
+
+#x5y2:checked ~ .map {
+  --x: 5;
+  --y: 2;
+}
+
+#x5y2:checked ~ .map label[for*='x5y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y2:checked ~ .map label[for*='x6y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y2:checked ~ .map label[for*='x5y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y2:checked ~ .map label[for*='x4y1'],
+#x5y2:checked ~ .map label[for*='x6y1'],
+#x5y2:checked ~ .map label[for*='x6y3'],
+#x5y2:checked ~ .map label[for*='x4y3'],
+#x5y2:checked ~ .map label[for*='x4y2'] {
+  pointer-events: none;
+}
+
+#x5y3:checked ~ .map {
+  --x: 5;
+  --y: 3;
+}
+
+#x5y3:checked ~ .map label[for*='x5y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y3:checked ~ .map label[for*='x6y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y3:checked ~ .map label[for*='x5y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y3:checked ~ .map label[for*='x4y2'],
+#x5y3:checked ~ .map label[for*='x6y2'],
+#x5y3:checked ~ .map label[for*='x6y4'],
+#x5y3:checked ~ .map label[for*='x4y4'],
+#x5y3:checked ~ .map label[for*='x4y3'] {
+  pointer-events: none;
+}
+
+#x5y4:checked ~ .map {
+  --x: 5;
+  --y: 4;
+}
+
+#x5y4:checked ~ .map label[for*='x5y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y4:checked ~ .map label[for*='x6y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y4:checked ~ .map label[for*='x5y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y4:checked ~ .map label[for*='x4y3'],
+#x5y4:checked ~ .map label[for*='x6y3'],
+#x5y4:checked ~ .map label[for*='x6y5'],
+#x5y4:checked ~ .map label[for*='x4y5'],
+#x5y4:checked ~ .map label[for*='x4y4'] {
+  pointer-events: none;
+}
+
+#x5y5:checked ~ .map {
+  --x: 5;
+  --y: 5;
+}
+
+#x5y5:checked ~ .map label[for*='x5y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y5:checked ~ .map label[for*='x6y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y5:checked ~ .map label[for*='x5y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y5:checked ~ .map label[for*='x4y4'],
+#x5y5:checked ~ .map label[for*='x6y4'],
+#x5y5:checked ~ .map label[for*='x6y6'],
+#x5y5:checked ~ .map label[for*='x4y6'],
+#x5y5:checked ~ .map label[for*='x4y5'] {
+  pointer-events: none;
+}
+
+#x5y6:checked ~ .map {
+  --x: 5;
+  --y: 6;
+}
+
+#x5y6:checked ~ .map label[for*='x5y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y6:checked ~ .map label[for*='x6y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y6:checked ~ .map label[for*='x5y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y6:checked ~ .map label[for*='x4y5'],
+#x5y6:checked ~ .map label[for*='x6y5'],
+#x5y6:checked ~ .map label[for*='x6y7'],
+#x5y6:checked ~ .map label[for*='x4y7'],
+#x5y6:checked ~ .map label[for*='x4y6'] {
+  pointer-events: none;
+}
+
+#x5y7:checked ~ .map {
+  --x: 5;
+  --y: 7;
+}
+
+#x5y7:checked ~ .map label[for*='x5y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y7:checked ~ .map label[for*='x6y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x5y7:checked ~ .map label[for*='x5y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x5y7:checked ~ .map label[for*='x4y6'],
+#x5y7:checked ~ .map label[for*='x6y6'],
+#x5y7:checked ~ .map label[for*='x6y8'],
+#x5y7:checked ~ .map label[for*='x4y8'],
+#x5y7:checked ~ .map label[for*='x4y7'] {
+  pointer-events: none;
+}
+
+#x6y1:checked ~ .map {
+  --x: 6;
+  --y: 1;
+}
+
+#x6y1:checked ~ .map label[for*='x6y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y1:checked ~ .map label[for*='x7y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y1:checked ~ .map label[for*='x6y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y1:checked ~ .map label[for*='x5y0'],
+#x6y1:checked ~ .map label[for*='x7y0'],
+#x6y1:checked ~ .map label[for*='x7y2'],
+#x6y1:checked ~ .map label[for*='x5y2'],
+#x6y1:checked ~ .map label[for*='x5y1'] {
+  pointer-events: none;
+}
+
+#x6y2:checked ~ .map {
+  --x: 6;
+  --y: 2;
+}
+
+#x6y2:checked ~ .map label[for*='x6y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y2:checked ~ .map label[for*='x7y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y2:checked ~ .map label[for*='x6y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y2:checked ~ .map label[for*='x5y1'],
+#x6y2:checked ~ .map label[for*='x7y1'],
+#x6y2:checked ~ .map label[for*='x7y3'],
+#x6y2:checked ~ .map label[for*='x5y3'],
+#x6y2:checked ~ .map label[for*='x5y2'] {
+  pointer-events: none;
+}
+
+#x6y3:checked ~ .map {
+  --x: 6;
+  --y: 3;
+}
+
+#x6y3:checked ~ .map label[for*='x6y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y3:checked ~ .map label[for*='x7y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y3:checked ~ .map label[for*='x6y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y3:checked ~ .map label[for*='x5y2'],
+#x6y3:checked ~ .map label[for*='x7y2'],
+#x6y3:checked ~ .map label[for*='x7y4'],
+#x6y3:checked ~ .map label[for*='x5y4'],
+#x6y3:checked ~ .map label[for*='x5y3'] {
+  pointer-events: none;
+}
+
+#x6y4:checked ~ .map {
+  --x: 6;
+  --y: 4;
+}
+
+#x6y4:checked ~ .map label[for*='x6y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y4:checked ~ .map label[for*='x7y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y4:checked ~ .map label[for*='x6y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y4:checked ~ .map label[for*='x5y3'],
+#x6y4:checked ~ .map label[for*='x7y3'],
+#x6y4:checked ~ .map label[for*='x7y5'],
+#x6y4:checked ~ .map label[for*='x5y5'],
+#x6y4:checked ~ .map label[for*='x5y4'] {
+  pointer-events: none;
+}
+
+#x6y5:checked ~ .map {
+  --x: 6;
+  --y: 5;
+}
+
+#x6y5:checked ~ .map label[for*='x6y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y5:checked ~ .map label[for*='x7y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y5:checked ~ .map label[for*='x6y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y5:checked ~ .map label[for*='x5y4'],
+#x6y5:checked ~ .map label[for*='x7y4'],
+#x6y5:checked ~ .map label[for*='x7y6'],
+#x6y5:checked ~ .map label[for*='x5y6'],
+#x6y5:checked ~ .map label[for*='x5y5'] {
+  pointer-events: none;
+}
+
+#x6y6:checked ~ .map {
+  --x: 6;
+  --y: 6;
+}
+
+#x6y6:checked ~ .map label[for*='x6y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y6:checked ~ .map label[for*='x7y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y6:checked ~ .map label[for*='x6y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y6:checked ~ .map label[for*='x5y5'],
+#x6y6:checked ~ .map label[for*='x7y5'],
+#x6y6:checked ~ .map label[for*='x7y7'],
+#x6y6:checked ~ .map label[for*='x5y7'],
+#x6y6:checked ~ .map label[for*='x5y6'] {
+  pointer-events: none;
+}
+
+#x6y7:checked ~ .map {
+  --x: 6;
+  --y: 7;
+}
+
+#x6y7:checked ~ .map label[for*='x6y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y7:checked ~ .map label[for*='x7y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x6y7:checked ~ .map label[for*='x6y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x6y7:checked ~ .map label[for*='x5y6'],
+#x6y7:checked ~ .map label[for*='x7y6'],
+#x6y7:checked ~ .map label[for*='x7y8'],
+#x6y7:checked ~ .map label[for*='x5y8'],
+#x6y7:checked ~ .map label[for*='x5y7'] {
+  pointer-events: none;
+}
+
+#x7y1:checked ~ .map {
+  --x: 7;
+  --y: 1;
+}
+
+#x7y1:checked ~ .map label[for*='x7y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y1:checked ~ .map label[for*='x8y1'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y1:checked ~ .map label[for*='x7y1'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y1:checked ~ .map label[for*='x6y0'],
+#x7y1:checked ~ .map label[for*='x8y0'],
+#x7y1:checked ~ .map label[for*='x8y2'],
+#x7y1:checked ~ .map label[for*='x6y2'],
+#x7y1:checked ~ .map label[for*='x6y1'] {
+  pointer-events: none;
+}
+
+#x7y2:checked ~ .map {
+  --x: 7;
+  --y: 2;
+}
+
+#x7y2:checked ~ .map label[for*='x7y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y2:checked ~ .map label[for*='x8y2'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y2:checked ~ .map label[for*='x7y2'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y2:checked ~ .map label[for*='x6y1'],
+#x7y2:checked ~ .map label[for*='x8y1'],
+#x7y2:checked ~ .map label[for*='x8y3'],
+#x7y2:checked ~ .map label[for*='x6y3'],
+#x7y2:checked ~ .map label[for*='x6y2'] {
+  pointer-events: none;
+}
+
+#x7y3:checked ~ .map {
+  --x: 7;
+  --y: 3;
+}
+
+#x7y3:checked ~ .map label[for*='x7y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y3:checked ~ .map label[for*='x8y3'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y3:checked ~ .map label[for*='x7y3'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y3:checked ~ .map label[for*='x6y2'],
+#x7y3:checked ~ .map label[for*='x8y2'],
+#x7y3:checked ~ .map label[for*='x8y4'],
+#x7y3:checked ~ .map label[for*='x6y4'],
+#x7y3:checked ~ .map label[for*='x6y3'] {
+  pointer-events: none;
+}
+
+#x7y4:checked ~ .map {
+  --x: 7;
+  --y: 4;
+}
+
+#x7y4:checked ~ .map label[for*='x7y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y4:checked ~ .map label[for*='x8y4'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y4:checked ~ .map label[for*='x7y4'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y4:checked ~ .map label[for*='x6y3'],
+#x7y4:checked ~ .map label[for*='x8y3'],
+#x7y4:checked ~ .map label[for*='x8y5'],
+#x7y4:checked ~ .map label[for*='x6y5'],
+#x7y4:checked ~ .map label[for*='x6y4'] {
+  pointer-events: none;
+}
+
+#x7y5:checked ~ .map {
+  --x: 7;
+  --y: 5;
+}
+
+#x7y5:checked ~ .map label[for*='x7y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y5:checked ~ .map label[for*='x8y5'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y5:checked ~ .map label[for*='x7y5'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y5:checked ~ .map label[for*='x6y4'],
+#x7y5:checked ~ .map label[for*='x8y4'],
+#x7y5:checked ~ .map label[for*='x8y6'],
+#x7y5:checked ~ .map label[for*='x6y6'],
+#x7y5:checked ~ .map label[for*='x6y5'] {
+  pointer-events: none;
+}
+
+#x7y6:checked ~ .map {
+  --x: 7;
+  --y: 6;
+}
+
+#x7y6:checked ~ .map label[for*='x7y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y6:checked ~ .map label[for*='x8y6'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y6:checked ~ .map label[for*='x7y6'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y6:checked ~ .map label[for*='x6y5'],
+#x7y6:checked ~ .map label[for*='x8y5'],
+#x7y6:checked ~ .map label[for*='x8y7'],
+#x7y6:checked ~ .map label[for*='x6y7'],
+#x7y6:checked ~ .map label[for*='x6y6'] {
+  pointer-events: none;
+}
+
+#x7y7:checked ~ .map {
+  --x: 7;
+  --y: 7;
+}
+
+#x7y7:checked ~ .map label[for*='x7y8'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y7:checked ~ .map label[for*='x8y7'] {
+  pointer-events: all;
+  cursor: pointer;
+}
+
+#x7y7:checked ~ .map label[for*='x7y7'] {
+  opacity: 0;
+  pointer-events: none !important;
+}
+
+#x7y7:checked ~ .map label[for*='x6y6'],
+#x7y7:checked ~ .map label[for*='x8y6'],
+#x7y7:checked ~ .map label[for*='x8y8'],
+#x7y7:checked ~ .map label[for*='x6y8'],
+#x7y7:checked ~ .map label[for*='x6y7'] {
+  pointer-events: none;
+}
+
+#x3y2:checked {
+  --sobra: 2;
+}
+
+#x3y2:checked ~ .map .player:before {
+  counter-increment: hp -3;
+}
+
+#x3y2:checked ~ .map .player:after {
+  counter-reset: atk;
+}
+
+#x3y2:checked ~ #x4y2:checked {
+  color: var(--sobra);
+}
+
+#x3y2:checked ~ #x4y2:checked ~ .map .player:before {
+  counter-reset: hp;
+  counter-increment: hp calc(var(--sobra) + -1);
+}
+
+#x3y2:checked ~ #x4y2:checked ~ .map .player:after {
+  counter-reset: atk;
+}
+
+/*
+// Potions
+#x3y3:checked,
+#x3y5:checked{
+    $hp-multiplier: $hp-multiplier + 3;
+    @include att-hp($hp-multiplier);
+}
+// Large potions
+#x5y6:checked{
+    $hp-multiplier: $hp-multiplier + 6;
+    @include att-hp($hp-multiplier);
+}
+// Swords
+#x4y5:checked,
+#x6y5:checked{
+    $atk-multiplier: $atk-multiplier + 5;
+    @include att-atk($atk-multiplier);
+}
+// Large swords
+#x2y4:checked,
+#x5y4:checked{
+    $atk-multiplier: $atk-multiplier + 10;
+    @include att-atk($atk-multiplier);
+}
+// Monster 1
+#x4y4:checked,
+#x3y6:checked{
+    $monster-hp: 2;
+    $monster-atk: 1;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 2
+#x6y4:checked,
+#x5y5:checked{
+    $monster-hp: 3;
+    $monster-atk: 2;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 3
+#x6y3:checked{
+    $monster-hp: 6;
+    $monster-atk: 6;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 4
+#x2y3:checked,
+#x2y5:checked{
+    $monster-hp: 1;
+    $monster-atk: 2;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 5
+#x4y3:checked{
+    $monster-hp: 2;
+    $monster-atk: 3;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 6
+#x5y2:checked{
+    $monster-hp: 6;
+    $monster-atk: 6;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+*/
+/*# sourceMappingURL=main.css.map */

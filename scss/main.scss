@@ -1,0 +1,560 @@
+$game_size: 840px;
+$block_qtd: 7;
+$block_size: $game_size / $block_qtd;
+$x: 2;
+$y: 2;
+*{
+    box-sizing: border-box;
+}
+:root{
+    --x: 2;
+    --y: 2;
+    --hp: 5;
+    --atk: 0;
+    counter-increment: hp var(--hp);
+}
+body{
+    background: #25131a;
+    font-family: 'Press Start 2P';
+    counter-increment: atk var(--atk);
+}
+input{
+    display: none;
+}
+@mixin sprite($x: 0, $y: 0, $addSprite: true){
+    @if $addSprite{
+        background: url(../img/sprite.png) no-repeat;
+    }
+    background-size: auto;
+    background-position: unquote('#{-120 * $x}px #{-120 * $y}px');
+}
+@mixin ui-text(){
+    z-index: 1;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 0.75rem;
+    font-size: 1.5rem;
+    text-shadow: 3px 3px 0 #000,
+                -3px -3px 0 #000, 
+                3px -3px 0 #000, 
+                -3px 3px 0 #000, 
+                3px 0 0 #000,
+                0 3px 0 #000, 
+                -3px 0px 0 #000, 
+                0px -3px 0 #000;
+}
+@mixin ui-heart(){
+    content: '';
+    width: 100%;
+    height: 100%;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transform: translate(30%, -30%);
+    -webkit-backface-visibility: hidden;
+    @include sprite-animate(ui_heart, 11, 0, 4, 1s);
+    @include ui-text();
+    padding: 0;
+}
+@mixin ui-sword(){
+    content: '';
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    transform: translate(30%, 0);
+    -webkit-backface-visibility: hidden;
+    @include sprite-animate(ui_sword, 11, 4, 4, 1s);
+    @include ui-text();
+    line-height: 1.5;
+    padding: 0;
+}
+@mixin att-hp($plus-hp: 0){
+    --hp: $plus-hp;
+    ~ .map .player:before{
+        counter-increment: hp #{$plus-hp};
+    }
+}
+@mixin att-atk($plus-atk: 0, $is-reset: false){
+    ~ .map .player:after{
+        @if($is-reset){
+            counter-reset: atk;
+        } @else{
+            counter-increment: atk #{$plus-atk};
+        }
+    }
+}
+@mixin sprite-animate($name, $sprite-x: 0, $sprite-y: 0, $steps: 0, $time: 0.5s){
+    @include sprite($sprite-x, $sprite-y);
+    animation: $name $time steps($steps, end) infinite;
+    @keyframes #{$name}{
+        0%{
+            @include sprite($sprite-x, $sprite-y, false);
+        }
+        100%{
+            @include sprite($sprite-x + $steps, $sprite-y, false);
+        }
+    }
+}
+.map{
+	width: $game_size;
+	height: $game_size;
+    margin: 0 auto;
+    position: relative;
+    @include sprite();
+    display: grid;
+    grid-template-columns: repeat($block_qtd, 1fr);
+    > label{
+        position: relative;
+        width: $block_size;
+        height: $block_size;
+        pointer-events: none;
+        color: #fff;
+    }
+}
+.player{
+    width: $block_size;
+    height: $block_size * 2;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    color: #fff;
+    pointer-events: none;
+    left: calc(#{$block_size} * var(--x) - #{$block_size});
+    top: calc(#{$block_size} * var(--y) - #{$block_size} - #{$block_size});
+    @include sprite(4, 7);
+    animation: player_animation 0.5s steps(4, end) infinite;
+    @keyframes player_animation{
+        0%{
+            @include sprite(4, 7, false);
+        }
+        100%{
+            @include sprite(8, 7, false);
+        }
+    }
+    &:before{
+        @include ui-heart();
+        content: counter(hp);
+        height: 50%;
+        transform: none;
+    }
+    &:after{
+        @include ui-sword();
+        content: counter(atk);
+        height: 50%;
+        transform: none;
+    }
+}
+.wall{
+    pointer-events: none !important;
+}
+.monster1{
+    &:before{
+        @include ui-heart();
+        content: attr(hp);
+    }
+    &:after{
+        @include ui-sword();
+        content: attr(atk);
+    }
+    span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        @include sprite-animate(monster1, 0, 9, 4, 0.5s);
+    }
+
+}
+.monster2{
+    &:before{
+        @include ui-heart();
+        content: attr(hp);
+    }
+    &:after{
+        @include ui-sword();
+        content: attr(atk);
+    }
+    span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        @include sprite-animate(monster2, 0, 10, 4, 0.5s);
+    }
+}
+.monster3{
+    &:before{
+        @include ui-heart();
+        content: attr(hp);
+        transform: none;
+    }
+    &:after{
+        @include ui-sword();
+        content: attr(atk);
+        transform: none;
+    }
+    span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        pointer-events: none;
+        @include sprite(4, 9);
+        animation: monster3 0.5s steps(1, end) infinite;
+        @keyframes monster3{
+            0%{
+                @include sprite(4, 9, false);
+            }
+            50%{
+                @include sprite(6, 9, false);
+            }
+            75%{
+                @include sprite(8, 9, false);
+            }
+            100%{
+                @include sprite(10, 9, false);
+            }
+        }
+    }
+}
+.monster4{
+    &:before{
+        @include ui-heart();
+        content: attr(hp);
+    }
+    &:after{
+        @include ui-sword();
+        content: attr(atk);
+    }
+    span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        @include sprite-animate(monster4, 0, 11, 4, 0.5s);
+    }
+}
+.monster5{
+    &:before{
+        @include ui-heart();
+        content: attr(hp);
+    }
+    &:after{
+        @include ui-sword();
+        content: attr(atk);
+    }
+    span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 200%;
+        pointer-events: none;
+        @include sprite-animate(monster5, 0, 12, 4, 0.5s);
+    }
+}
+.monster6{
+    &:before{
+        @include ui-heart();
+        content: attr(hp);
+        transform: none;
+    }
+    &:after{
+        @include ui-sword();
+        content: attr(atk);
+        transform: none;
+    }
+    span{
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 200%;
+        height: 200%;
+        pointer-events: none;
+        @include sprite(4, 12);
+        animation: monster6 0.5s steps(1, end) infinite;
+        @keyframes monster6{
+            0%{
+                @include sprite(4, 12, false);
+            }
+            50%{
+                @include sprite(6, 12, false);
+            }
+            75%{
+                @include sprite(8, 12, false);
+            }
+            100%{
+                @include sprite(10, 12, false);
+            }
+        }
+    }
+}
+.potion{
+    position: relative;
+    &:before{
+        content: '+' attr(hp);
+        @include ui-text();
+    }
+    @include sprite-animate(potion, 7, 0, 4);
+}
+.potion-lg{
+    position: relative;
+    &:before{
+        content: '+' attr(hp);
+        @include ui-text();
+    }
+    @include sprite-animate(potion_lg, 7, 1, 4);
+}
+.sword{
+    position: relative;
+    &:after{
+        content: '+' attr(atk);
+        @include ui-text();
+    }
+    @include sprite-animate(sword, 7, 2, 4);
+}
+.sword-lg{
+    position: relative;
+    &:after{
+        content: '+' attr(atk);
+        @include ui-text();
+    }
+    @include sprite-animate(sword_lg, 7, 3, 4);
+}
+.torch{
+    position: relative;
+    pointer-events: none !important;
+    @include sprite-animate(torch, 7, 5, 4);
+}
+.key{
+    position: relative;
+    @include sprite-animate(key, 11, 5, 4);
+}
+.chest{
+    position: relative;
+    @include sprite-animate(chest, 7, 6, 4);
+}
+$hp-multiplier: 0;
+$atk-multiplier: 0;
+@for $i from 1 through $block_qtd {
+    @for $j from 1 through $block_qtd {
+        #x#{$i}y#{$j}:checked{
+            & ~ .map{
+                --x: #{$i};
+                --y: #{$j};
+
+                // Enable below
+                label[for*='x#{$i}y#{$j + 1}']{
+                    pointer-events: all;
+                    cursor: pointer;
+                }
+
+                // Enable right
+                label[for*='x#{$i + 1}y#{$j}']{
+                    pointer-events: all;
+                    cursor: pointer;
+                }
+
+                // Disable current
+                label[for*='x#{$i}y#{$j}']{
+                    opacity: 0;
+                    pointer-events: none !important;
+                }
+                // Disable top left block
+                label[for*='x#{$i - 1}y#{$j - 1}'],
+                // Disable top right block
+                label[for*='x#{$i + 1}y#{$j - 1}'],
+                // Disable down right block
+                label[for*='x#{$i + 1}y#{$j + 1}'],
+                // Disable down left block
+                label[for*='x#{$i - 1}y#{$j + 1}'],
+                // Disable left block
+                label[for*='x#{$i - 1}y#{$j}']{
+                    pointer-events: none;
+                }
+            }
+            #x#{$i + 1}y#{$j}:checked ~ .map{
+                // Enable right
+                @if $i + 1 < $block_qtd - 1 {
+                    label[for*='x#{$i + 2}y#{$j}']{
+                        pointer-events: all;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+#x3y2:checked{
+    $monster-hp: 2;
+    $monster-atk: 1;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        ~ .map .player:before{
+            counter-increment: hp $hp-multiplier;
+        }
+        ~ .map .player:after{
+            counter-reset: atk;
+        }
+        --sobra: #{5 + $hp-multiplier};
+    } @else{
+        ~ .map .player:after{
+            counter-increment: atk $atk-multiplier;
+        }
+        --sobra: var(--hp);
+    }
+    & ~ #x4y2:checked{
+        color: var(--sobra);
+        $monster-hp: 1;
+        $monster-atk: 0;
+        $total: $monster-hp + $monster-atk;
+        $diff: $atk-multiplier - $total;
+        
+        @if $diff < 0 {
+            $hp-multiplier: $hp-multiplier + $diff;
+            ~ .map .player:before{
+                counter-reset: hp;
+                counter-increment: hp calc(var(--sobra) + #{$hp-multiplier});
+            }
+            ~ .map .player:after{
+                counter-reset: atk;
+            }
+        } @else{
+            ~ .map .player:after{
+                counter-reset: atk;
+                counter-increment: atk $atk-multiplier;
+            }
+        }
+
+    }
+}
+/*
+// Potions
+#x3y3:checked,
+#x3y5:checked{
+    $hp-multiplier: $hp-multiplier + 3;
+    @include att-hp($hp-multiplier);
+}
+// Large potions
+#x5y6:checked{
+    $hp-multiplier: $hp-multiplier + 6;
+    @include att-hp($hp-multiplier);
+}
+// Swords
+#x4y5:checked,
+#x6y5:checked{
+    $atk-multiplier: $atk-multiplier + 5;
+    @include att-atk($atk-multiplier);
+}
+// Large swords
+#x2y4:checked,
+#x5y4:checked{
+    $atk-multiplier: $atk-multiplier + 10;
+    @include att-atk($atk-multiplier);
+}
+// Monster 1
+#x4y4:checked,
+#x3y6:checked{
+    $monster-hp: 2;
+    $monster-atk: 1;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 2
+#x6y4:checked,
+#x5y5:checked{
+    $monster-hp: 3;
+    $monster-atk: 2;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 3
+#x6y3:checked{
+    $monster-hp: 6;
+    $monster-atk: 6;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 4
+#x2y3:checked,
+#x2y5:checked{
+    $monster-hp: 1;
+    $monster-atk: 2;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 5
+#x4y3:checked{
+    $monster-hp: 2;
+    $monster-atk: 3;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+// Monster 6
+#x5y2:checked{
+    $monster-hp: 6;
+    $monster-atk: 6;
+    $total: $monster-hp + $monster-atk;
+    $diff: $atk-multiplier - $total;
+    
+    @if $diff < 0 {
+        $hp-multiplier: $hp-multiplier + $diff;
+        @include att-hp($hp-multiplier);
+        @include att-atk(0, true);
+    } @else{
+        @include att-atk($atk-multiplier);
+    }
+}
+*/
